@@ -4,11 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Happy Mother's Day</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Playfair+Display:wght@500&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #ffe6f0, #fff5f5);
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #fdf6f0, #fceae8);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -18,67 +22,129 @@
     }
 
     h1 {
-      font-size: 3rem;
-      color: #ff4d6d;
+      font-size: 3.2rem;
+      color: #4b2e2a;
+      margin-bottom: 60px;
+      letter-spacing: 2px;
     }
 
-    p {
-      font-size: 1.5rem;
-      margin-top: 10px;
-    }
-
-    .letter {
-      margin-top: 40px;
-      width: 250px;
-      height: 150px;
-      background: #fff;
-      border: 2px solid #ff4d6d;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Envelope container */
+    .envelope {
+      position: relative;
+      width: 320px;
+      height: 210px;
+      background: linear-gradient(145deg, #a47148, #8b5e3c);
+      border-radius: 12px;
       cursor: pointer;
-      transition: transform 0.3s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      overflow: hidden;
+      transition: transform 0.4s ease;
     }
 
-    .letter:hover {
-      transform: scale(1.05);
+    .envelope:hover {
+      transform: translateY(-8px) scale(1.03);
     }
 
-    .hidden {
-      display: none;
-      margin-top: 20px;
+    /* Flap */
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #7a4e2f;
+      clip-path: polygon(0 0, 100% 0, 50% 60%);
+      transform-origin: top;
+      transition: transform 0.8s ease;
+      z-index: 2;
+    }
+
+    .envelope.open .flap {
+      transform: rotateX(180deg);
+    }
+
+    /* Click text */
+    .click-text {
+      position: absolute;
+      width: 100%;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff8f3;
+      font-size: 1.3rem;
+      letter-spacing: 6px;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    .envelope.open .click-text {
+      opacity: 0;
+    }
+
+    /* Letter */
+    .letter-content {
+      position: absolute;
+      width: 90%;
+      height: 88%;
+      background: #fffaf7;
+      top: 8%;
+      left: 5%;
+      border-radius: 12px;
       padding: 20px;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      max-width: 500px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+      transform: translateY(110%);
+      transition: transform 0.9s ease;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.4rem;
+      color: #5a3e36;
+      line-height: 1.6;
     }
 
-    .open-text {
-      font-size: 1.2rem;
-      color: #555;
+    .envelope.open .letter-content {
+      transform: translateY(0);
     }
+
+    /* Image styling */
+    .letter-content img {
+      width: 100%;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    /* Subtle fade background overlay */
+    body::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255,255,255,0.2), transparent);
+      pointer-events: none;
+    }
+
   </style>
 </head>
 <body>
 
-  <h1>Happy Mother's Day ❤️</h1>
-  <p>आमा, तपाईं मेरो संसारको सबैभन्दा सुन्दर उपहार हुनुहुन्छ । तपाईंको माया र त्यागले मेरो जीवन उज्यालो बनाएको छ ❤️</p>
+  <h1>Happy Mother's Day</h1>
 
-  <div class="letter" onclick="openLetter()">
-    <span class="open-text">Open Letter 💌</span>
+  <div class="envelope" onclick="openLetter(this)">
+    <div class="flap"></div>
+    <div class="click-text">CLICK</div>
+
+    <div class="letter-content">
+      My Dear Mom 💖<br><br>
+      <img src="mom.jpg" alt="Mom"/>
+      (Your poem will appear here)
+    </div>
   </div>
 
-  <div id="poem" class="hidden">
-    <h2>My Dear Mom 💖</h2>
-    <p>(Your poem will appear here)</p>
-  </div>
+  <!-- Music -->
+  <audio id="music" src="https://www.bensound.com/bensound-music/bensound-love.mp3"></audio>
 
   <script>
-    function openLetter() {
-      document.getElementById('poem').style.display = 'block';
+    function openLetter(el) {
+      el.classList.toggle('open');
+      const music = document.getElementById('music');
+      music.volume = 0.4;
+      music.play();
     }
   </script>
 
